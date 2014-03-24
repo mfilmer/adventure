@@ -21,7 +21,10 @@ data Door = Door (RID,RID) DoorType DoorStatus KeyID
 data Stair = Stair (RID,RID)
             deriving (Show, Eq)
 
+data ItemType = Key KeyID | OtherItem {itemDesc :: String}
+
 data Item = Item { itemName :: String
+                 , itemType :: ItemType
                  , itemWeight :: Int
                  , itemAttributes :: [(String,String)]}
 
