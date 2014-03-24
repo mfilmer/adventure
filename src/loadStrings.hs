@@ -1,5 +1,9 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
+module LoadStrings
+	(getStrings)
+	where
+
 import Text.JSON
 import Text.JSON.Generic
 
