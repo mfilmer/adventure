@@ -16,7 +16,7 @@ data Command =
   Exit
   deriving (Show)
 
-commands = [("use","^ *use +([a-zA-Z]+)( +on +([a-zA-Z]+))? *$")]
+commands = [("use","^ *use +(the +[a-zA-Z]+|[a-zA-Z]+)( +on +([a-zA-Z]+|the +[a-zA-Z]+))? *$")]
 
 strip char = dropWhile (== char)
 

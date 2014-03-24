@@ -11,6 +11,10 @@
       "I can't do that"
     ],
     [
+      "exit",
+      "You abandon the adventure"
+    ],
+    [
       "die",
       "You appear to have died"
     ]

@@ -46,7 +46,7 @@ gameLoop world strings = do
     else do
       let (world', exit) = runCommand world strings (fromJust command)
       if exit
-        then putStrLn "The End"
+        then putStrLn $ fromJust $ lookup "exit" sMessages
         else gameLoop world' strings
   where
     sMessages = S.sMessages strings
