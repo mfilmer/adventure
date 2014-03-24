@@ -1,7 +1,7 @@
 -- A text based adventure game
 
 import Data.List (splitAt)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromJust)
 
 ----- Data Types -----
 data Game = Game World Player
@@ -34,7 +34,7 @@ parseStrs fileString = [(key x,value x) | x <- lines fileString]
 
 main = do
   strings <- readStrings
-  putStrLn $ fromMaybe "" (lookup "welcome" strings)
+  putStrLn $ fromJust $ lookup "welcome" strings
 
   --world <- generateWorld
   --gameLoop world
