@@ -1,0 +1,15 @@
+{
+"sMessages":
+	[
+    [
+      "welcome",
+      "Welcome to the adventure, try to not die"
+    ],
+    [
+      "die",
+      "You appear to have died"
+    ]
+  ],
+"sColors":
+  ["red", "blue", "green", "yellow"]
+}

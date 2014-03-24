@@ -1,11 +1,15 @@
 -- A text based adventure game
+{-# LANGUAGE DeriveDataTypeable #-}
 
 import Data.List (splitAt)
 import Data.Maybe (fromJust)
 
+import qualified loadStrings as S
+
 ----- Data Types -----
 data Game = Game World Player
-data Room = Room RID Inventory [Door] [Stair]
+data Room = Room RID RoomType Inventory [Door] [Stair]
+data RoomType = RoomRoom | RoomHall deriving (Show, Eq)
 data Player = Player RID Inventory
 data Door = Door (RID,RID)
             deriving (Show, Eq)
