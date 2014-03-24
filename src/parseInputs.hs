@@ -2,7 +2,7 @@
 
 module ParseInputs
   ( parseCommand
-  , Command (Use, Exit)
+  , Command (Exit,Use,Open,Close,Lock,Unlock)
   ) where
 
 import Data.Char (toLower)
@@ -11,12 +11,29 @@ import Text.Regex.TDFA ((=~))
 
 -- Data types
 data Command =
+  Exit | 
   Use { useItem :: String
       , useTarget :: Maybe String} |
-  Exit
+  Open { cTarget :: String } |
+  Close { cTarget :: String } |
+  Lock { cTarget :: String } |
+  Unlock { cTarget :: String } |
+  Pickup { cTarget :: String} |
+  Drop { cTarget :: String } |
+  Move { cTarget :: String}
   deriving (Show)
 
-commands = [("use","^ *use +(the +[a-zA-Z]+|[a-zA-Z]+)( +on +([a-zA-Z]+|the +[a-zA-Z]+))? *$")]
+simpleCommand command = "^ *" ++ command ++ " +(the +[a-zA-Z]+|[a-zA-Z]+)$"
+
+commands = [
+  ("use","^ *use +(the +[a-zA-Z]+|[a-zA-Z]+)( +on +([a-zA-Z]+|the +[a-zA-Z]+))? *$"),
+  ("open", simpleCommand "open"),
+  ("close", simpleCommand "close"),
+  ("lock", simpleCommand "lock"),
+  ("unlock", simpleCommand "unlock"),
+  ("pickup", simpleCommand "pickup"),
+  ("drop", simpleCommand "drop")
+  ]
 
 strip char = dropWhile (== char)
 

@@ -24,10 +24,10 @@ data Stair = Stair (RID,RID)
 
 data ItemType = Key KeyID | OtherItem {itemDesc :: String}
 
-data Item = Item { itemName :: String
-                 , itemType :: ItemType
-                 , itemWeight :: Int
-                 , itemAttributes :: [(String,String)]}
+data Item = Item { iName :: String
+                 , iType :: ItemType
+                 , iWeight :: Int
+                 , iAttributes :: [(String,String)]}
 
 type KeyID = Int
 type World = [Room]
