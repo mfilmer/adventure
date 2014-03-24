@@ -30,7 +30,6 @@ data Item = Item { itemName :: String
                  , itemAttributes :: [(String,String)]}
 
 type KeyID = Int
-
 type World = [Room]
 type RID = Int
 type Inventory = [Item]

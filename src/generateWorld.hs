@@ -17,7 +17,7 @@ import World
 addRoom world = undefined
 
 generateWorld =
-  startingRoom
+  [startingRoom]
   where
   exitDoor = Door (0, 0) ExitDoor DoorLocked 0
   exitKey = Item "Mysterious Box" (Key 0) 0 []

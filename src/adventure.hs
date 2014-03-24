@@ -2,10 +2,10 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 import Data.List (splitAt)
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust,isNothing,isJust)
 
 import GenerateWorld (generateWorld)
-import ParseInputs (parseCommand)
+import qualified ParseInputs as P
 import qualified LoadStrings as S
 import World 
   ( Room (Room, Hall)
@@ -21,7 +21,7 @@ import World
   , Inventory)
 
 ----- Data Types -----
-data Game = Game World Player
+data GameState = GameState World Player
 data Player = Player RID Inventory
 
 ----- Functions and Such -----
@@ -31,11 +31,25 @@ main = do
 
   -- Set up initial world
   let world = generateWorld
+  let player = Player 0 []
+  let gameState = GameState world player
   gameLoop world strings
 
 gameLoop world strings = do
   putStr $ S.sPrompt strings
   textCommand <- getLine
-  let command = parseCommand textCommand
+  let command = P.parseCommand textCommand
+  if (isNothing command)
+    then do
+      putStrLn $ fromJust (lookup "invalidCommand" sMessages)
+      gameLoop world strings
+    else do
+      let (world', exit) = runCommand world strings (fromJust command)
+      if exit
+        then putStrLn "The End"
+        else gameLoop world' strings
+  where
+    sMessages = S.sMessages strings
 
-  gameLoop world strings
+runCommand world (S.Strings _ sMessages _) P.Exit = (world, True)
+runCommand world strings command = (world, False)

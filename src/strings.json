@@ -7,6 +7,10 @@
       "You hear the door slam shut behind you. You try to open it, but it is locked.\nWelcome to the adventure, try not to die."
     ],
     [
+      "invalidCommand",
+      "I can't do that"
+    ],
+    [
       "die",
       "You appear to have died"
     ]
