@@ -9,8 +9,8 @@ module World
   , KeyID
   , World
   , RID
-  , Inventory)
-  where
+  , Inventory
+  ) where
 
 data Room = Room RID Inventory [Door] [Stair] | Hall RID Inventory [Door] [Stair]
 data DoorType = ExitDoor | RustyDoor | StrongDoor | WoodenDoor

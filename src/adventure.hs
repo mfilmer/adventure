@@ -5,6 +5,7 @@ import Data.List (splitAt)
 import Data.Maybe (fromJust)
 
 import GenerateWorld (generateWorld)
+import ParseInputs (parseCommand)
 import qualified LoadStrings as S
 import World 
   ( Room (Room, Hall)
@@ -25,7 +26,7 @@ data Player = Player RID Inventory
 
 ----- Functions and Such -----
 main = do
-  strings@(sMessages, sColors) <- S.getStrings
+  strings@(S.Strings _ sMessages _) <- S.getStrings
   putStrLn $ fromJust $ lookup "welcome" sMessages
 
   -- Set up initial world
@@ -33,4 +34,8 @@ main = do
   gameLoop world strings
 
 gameLoop world strings = do
+  putStr $ S.sPrompt strings
+  textCommand <- getLine
+  let command = parseCommand textCommand
+
   gameLoop world strings
