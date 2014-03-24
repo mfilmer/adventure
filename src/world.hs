@@ -4,6 +4,7 @@ module World
   , Door (Door)
   , Stair (Stair)
   , Item (Item)
+  , KeyID (KeyID)
   , World
   , RID
   , Inventory)
@@ -11,7 +12,11 @@ module World
 
 data Room = Room RID RoomType Inventory [Door] [Stair]
 data RoomType = RoomRoom | RoomHall deriving (Show, Eq)
-data Door = Door (RID,RID)
+data DoorType = ExitDoor | RustyDoor | StrongDoor | WoodenDoor
+            deriving (Show, Eq)
+data DoorStatus = DoorLocked | DoorUnlocked | DoorOpen
+            deriving (Show, Eq, Enum, Ord)
+data Door = Door (RID,RID) DoorType DoorStatus KeyID
             deriving (Show, Eq)
 data Stair = Stair (RID,RID)
             deriving (Show, Eq)
@@ -19,6 +24,9 @@ data Stair = Stair (RID,RID)
 data Item = Item { itemName :: String
                  , itemWeight :: Int
                  , itemAttributes :: [(String,String)]}
+
+newtype KeyID = KeyID Int
+            deriving (Show, Eq)
 
 type World = [Room]
 type RID = Int

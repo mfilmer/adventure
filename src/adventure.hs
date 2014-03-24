@@ -11,6 +11,7 @@ import World
   , Door (Door)
   , Stair (Stair)
   , Item (Item)
+  , KeyID (KeyID)
   , World
   , RID
   , Inventory)
