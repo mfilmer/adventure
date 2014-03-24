@@ -12,6 +12,7 @@ import Text.Regex.TDFA ((=~))
 -- Data types
 data Command =
   Exit | 
+  Look { lookTarget :: Maybe String} |
   Use { useItem :: String
       , useTarget :: Maybe String} |
   Open { cTarget :: String } |
@@ -23,19 +24,31 @@ data Command =
   Move { cTarget :: String}
   deriving (Show)
 
-simpleCommand command = "^ *" ++ command ++ " +(the +[a-zA-Z]+|[a-zA-Z]+)$"
+simpleCommand command = "^ *" ++ command ++ " +(the +[a-zA-Z]+|[a-zA-Z]+) *$"
 
 commands = [
+  ("exit", "^ *exit *$"),
+  ("look", "^ *look +at +([a-zA-Z]+) *"),
+  ("examine", "^ *examine +([a-zA-Z]+) *")
   ("use","^ *use +(the +[a-zA-Z]+|[a-zA-Z]+)( +on +([a-zA-Z]+|the +[a-zA-Z]+))? *$"),
   ("open", simpleCommand "open"),
   ("close", simpleCommand "close"),
   ("lock", simpleCommand "lock"),
   ("unlock", simpleCommand "unlock"),
   ("pickup", simpleCommand "pickup"),
-  ("drop", simpleCommand "drop")
+  ("drop", simpleCommand "drop"),
+  ("move", simpleCommand "move")
   ]
 
 strip char = dropWhile (== char)
+
+makeExitCommand :: String -> Maybe Command
+makeExitCommand fullCommand =
+  if (fullCommand =~ pat)
+    then Just Exit
+    else Nothing
+    where
+    pat = fromJust $ lookup "exit" commands
 
 makeUseCommand :: String -> Maybe Command
 makeUseCommand fullCommand = 
@@ -52,10 +65,12 @@ makeUseCommand fullCommand =
               then Just $ matchGroups !! 2
               else Nothing
 
+makeOpenCommand
+
 parseCommand :: String -> Maybe Command
 parseCommand fullCommand
   | primaryCommand == "use" = makeUseCommand fullCommand
-  | primaryCommand == "exit" = Just Exit
+  | primaryCommand == "exit" = makeExitCommand fullCommand
   | otherwise = Nothing
     where
     primaryCommand = (map toLower) $ takeWhile (/=' ') $ strip ' ' fullCommand
