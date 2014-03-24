@@ -7,7 +7,7 @@ import Data.Maybe (fromMaybe)
 data Game = Game World Player
 data Room = Room RID Inventory [Door]
 data Player = Player RID Inventory
-data Door = N | NE | E | SE | S | SW | W | NW
+data Door = N | S | E | W | SN | SS | SE | SW
             deriving (Show, Eq)
 
 data Item = Item { itemName :: String
