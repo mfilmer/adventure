@@ -5,9 +5,11 @@ import Data.Maybe (fromMaybe)
 
 ----- Data Types -----
 data Game = Game World Player
-data Room = Room RID Inventory [Door]
+data Room = Room RID Inventory [Door] [Stair]
 data Player = Player RID Inventory
-data Door = N | S | E | W | SN | SS | SE | SW
+data Door = Door (RID,RID)
+            deriving (Show, Eq)
+data Stair = Stair (RID,RID)
             deriving (Show, Eq)
 
 data Item = Item { itemName :: String
