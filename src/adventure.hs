@@ -4,14 +4,17 @@
 import Data.List (splitAt)
 import Data.Maybe (fromJust)
 
+import GenerateWorld (generateWorld)
 import qualified LoadStrings as S
 import World 
-  ( Room (Room)
-  , RoomType (RoomRoom, RoomHall)
+  ( Room (Room, Hall)
   , Door (Door)
+  , DoorType (ExitDoor, RustyDoor, StrongDoor, WoodenDoor)
+  , DoorStatus (DoorLocked, DoorUnlocked, DoorOpen)
   , Stair (Stair)
   , Item (Item)
-  , KeyID (KeyID)
+  , ItemType (Key, OtherItem)
+  , KeyID
   , World
   , RID
   , Inventory)
@@ -25,8 +28,9 @@ main = do
   strings@(sMessages, sColors) <- S.getStrings
   putStrLn $ fromJust $ lookup "welcome" sMessages
 
-  --world <- generateWorld
-  --gameLoop world strings
+  -- Set up initial world
+  let world = generateWorld
+  gameLoop world strings
 
 gameLoop world strings = do
   gameLoop world strings

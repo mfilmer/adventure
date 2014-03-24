@@ -1,17 +1,18 @@
 module World
-  ( Room (Room)
-  , RoomType (RoomRoom, RoomHall)
+  ( Room (Room, Hall)
   , Door (Door)
+  , DoorType (ExitDoor, RustyDoor, StrongDoor, WoodenDoor)
+  , DoorStatus (DoorLocked, DoorUnlocked, DoorOpen)
   , Stair (Stair)
   , Item (Item)
-  , KeyID (KeyID)
+  , ItemType (Key, OtherItem)
+  , KeyID
   , World
   , RID
   , Inventory)
   where
 
-data Room = Room RID RoomType Inventory [Door] [Stair]
-data RoomType = RoomRoom | RoomHall deriving (Show, Eq)
+data Room = Room RID Inventory [Door] [Stair] | Hall RID Inventory [Door] [Stair]
 data DoorType = ExitDoor | RustyDoor | StrongDoor | WoodenDoor
             deriving (Show, Eq)
 data DoorStatus = DoorLocked | DoorUnlocked | DoorOpen
@@ -28,8 +29,7 @@ data Item = Item { itemName :: String
                  , itemWeight :: Int
                  , itemAttributes :: [(String,String)]}
 
-newtype KeyID = KeyID Int
-            deriving (Show, Eq)
+type KeyID = Int
 
 type World = [Room]
 type RID = Int

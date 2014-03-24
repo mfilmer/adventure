@@ -2,19 +2,23 @@ module GenerateWorld
   where
 
 import World
-  ( Room (Room)
-  , RoomType (RoomRoom, RoomHall)
+  ( Room (Room, Hall)
   , Door (Door)
+  , DoorType (ExitDoor, RustyDoor, StrongDoor, WoodenDoor)
+  , DoorStatus (DoorLocked, DoorUnlocked, DoorOpen)
   , Stair (Stair)
   , Item (Item)
-  , KeyID (KeyID)
+  , ItemType (Key, OtherItem)
+  , KeyID
   , World
   , RID
   , Inventory)
 
 addRoom world = undefined
 
-generateWorld = do
-  exitDoor = Door (0,0) ExitDoor DoorLocked 0
+generateWorld =
+  startingRoom
+  where
+  exitDoor = Door (0, 0) ExitDoor DoorLocked 0
   exitKey = Item "Mysterious Box" (Key 0) 0 []
-  startingRoom = Room 0 RoomRoom [exitDoor] [exitKey]
+  startingRoom = Room 0 [exitKey] [exitDoor] []
